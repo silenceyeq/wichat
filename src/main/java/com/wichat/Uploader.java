@@ -1,4 +1,4 @@
-package com.wiichat;
+package com.wichat;
 
 import java.io.*;
 import java.text.SimpleDateFormat;

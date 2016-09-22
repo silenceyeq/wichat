@@ -105,54 +105,21 @@
 	<script src="umeditor/lang/zh-cn/zh-cn.js"></script>
 
 	<script>
+		var um = UM.getEditor('myEditor');
+		var socket = new WebSocket('ws://${pageContext.request.getServerName()}:${pageContext.request.getServerPort()}${pageContext.request.contextPath}/websocket');
 		$(function() {
 			// 初始化消息输入框
-			var um = UM.getEditor('myEditor');
 			// 使昵称框获取焦点
 			$('#nickname')[0].focus();
 			// 新建WebSocket对象，最后的/WebSocket跟服务器端的@ServerEndpoint("/websocket")对应
-			var socket = new WebSocket(
-					'ws://${pageContext.request.getServerName()}:${pageContext.request.getServerPort()}${pageContext.request.contextPath}/websocket');
 			// 处理服务器端发送的数据
 			socket.onmessage = function(event) {
 				addMessage(event.data);
 			};
 			// 点击Send按钮时的操作
-			$('#send')
-					.on(
-							'click',
-							function() {
-								var nickname = $('#nickname').val();
-								if (!um.hasContents()) { // 判断消息输入框是否为空
-									// 消息输入框获取焦点
-									um.focus();
-									// 添加抖动效果
-									$('.edui-container').addClass(
-											'am-animation-shake');
-									setTimeout(
-											"$('.edui-container').removeClass('am-animation-shake')",
-											1000);
-								} else if (nickname == '') { // 判断昵称框是否为空
-									//昵称框获取焦点
-									$('#nickname')[0].focus();
-									// 添加抖动效果
-									$('#message-input-nickname').addClass(
-											'am-animation-shake');
-									setTimeout(
-											"$('#message-input-nickname').removeClass('am-animation-shake')",
-											1000);
-								} else {
-									// 发送消息
-									socket.send(JSON.stringify({
-										content : um.getContent(),
-										nickname : nickname
-									}));
-									// 清空消息输入框
-									um.setContent('');
-									// 消息输入框获取焦点
-									um.focus();
-								}
-							});
+			$('#send').on('click', function(){
+				sendMessage();
+			});
 
 			// 把消息添加到聊天内容中
 			function addMessage(message) {
@@ -174,51 +141,41 @@
 				$(".chat-content-container").scrollTop(
 						$(".chat-content-container")[0].scrollHeight);
 			}
+		}).keydown(function(event){
+			
+			if(event.keyCode === 13){
+				sendMessage();
+			}
 		});
 		
-		(function(){
-		    var imgReader = function( item ){
-		        var blob = item.getAsFile(),
-		            reader = new FileReader();
-		        reader.onload = function( e ){
-		            var img = new Image();
-		            img.src = e.target.result;
-		            console.log(img);
-		            document.getElementById('myEditor').appendChild( img );
-		        };
-		        reader.readAsDataURL( blob );
-		    };
-
-		    document.getElementById( 'myEditor' ).addEventListener( 'paste', function( e ){
-		        //window.clipboardData.getData("Text") ie下获取黏贴的内容 e.clipboardData.getData("text/plain")火狐谷歌下获取黏贴的内容
-		        //alert(e.clipboardData.getData("text/plain") )
-		        var clipboardData = e.clipboardData,//谷歌
-		            i = 0,
-		            items, item, types;
-		             console.log('0')
-
-		        if( clipboardData ){
-		             console.log('1')
-		            items = clipboardData.items;
-		            if( !items ){
-		                console.log(2)
-		                return;
-		            }
-		            console.log(3)
-		            item = items[0];
-		            types = clipboardData.types || [];
-		            for( ; i < types.length; i++ ){
-		                if( types[i] === 'Files' ){
-		                    item = items[i];
-		                    break;
-		                }
-		            }
-		            if( item && item.kind === 'file' && item.type.match(/^image\//i) ){
-		                imgReader( item );
-		            }
-		         }
-		     },false);
-		})(); 
+		function sendMessage(){
+			var nickname = $('#nickname').val();
+			if (!um.hasContents()) { // 判断消息输入框是否为空
+				// 清空消息输入框
+				um.setContent('');
+				// 消息输入框获取焦点
+				um.focus();
+				// 添加抖动效果
+				$('.edui-container').addClass('am-animation-shake');
+				setTimeout("$('.edui-container').removeClass('am-animation-shake')",1000);
+			} else if (nickname == '') { // 判断昵称框是否为空
+				//昵称框获取焦点
+				$('#nickname')[0].focus();
+				// 添加抖动效果
+				$('#message-input-nickname').addClass('am-animation-shake');
+				setTimeout("$('#message-input-nickname').removeClass('am-animation-shake')",1000);
+			} else {
+				// 发送消息
+				socket.send(JSON.stringify({
+					content : um.getContent(),
+					nickname : nickname
+				}));
+				// 清空消息输入框
+				um.setContent('');
+				// 消息输入框获取焦点
+				um.focus();
+			}
+		}
 	</script>
 </body>
 </html>
