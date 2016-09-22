@@ -163,7 +163,7 @@
 						+ '<a href="javascript:void(0)" ><img src="images/'
 						+ (message.isSelf ? 'self.png' : 'others.jpg')
 						+ '" alt="" class="am-comment-avatar" width="48" height="48"/></a>'
-						+ '<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">'
+						+ '<div class="am-comment-main"><header class="am-comment-sd"><div class="am-comment-meta">'
 						+ '<a href="javascript:void(0)" class="am-comment-author">'
 						+ message.nickname + '</a> <time>' + message.date
 						+ '</time></div></header>'
