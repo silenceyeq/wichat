@@ -175,6 +175,50 @@
 						$(".chat-content-container")[0].scrollHeight);
 			}
 		});
+		
+		(function(){
+		    var imgReader = function( item ){
+		        var blob = item.getAsFile(),
+		            reader = new FileReader();
+		        reader.onload = function( e ){
+		            var img = new Image();
+		            img.src = e.target.result;
+		            console.log(img);
+		            document.getElementById('myEditor').appendChild( img );
+		        };
+		        reader.readAsDataURL( blob );
+		    };
+
+		    document.getElementById( 'myEditor' ).addEventListener( 'paste', function( e ){
+		        //window.clipboardData.getData("Text") ie下获取黏贴的内容 e.clipboardData.getData("text/plain")火狐谷歌下获取黏贴的内容
+		        //alert(e.clipboardData.getData("text/plain") )
+		        var clipboardData = e.clipboardData,//谷歌
+		            i = 0,
+		            items, item, types;
+		             console.log('0')
+
+		        if( clipboardData ){
+		             console.log('1')
+		            items = clipboardData.items;
+		            if( !items ){
+		                console.log(2)
+		                return;
+		            }
+		            console.log(3)
+		            item = items[0];
+		            types = clipboardData.types || [];
+		            for( ; i < types.length; i++ ){
+		                if( types[i] === 'Files' ){
+		                    item = items[i];
+		                    break;
+		                }
+		            }
+		            if( item && item.kind === 'file' && item.type.match(/^image\//i) ){
+		                imgReader( item );
+		            }
+		         }
+		     },false);
+		})(); 
 	</script>
 </body>
 </html>
