@@ -13,7 +13,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>ShiYanLou Chat</title>
+<title>Wi Chat</title>
 
 <!-- Set render engine for 360 browser -->
 <meta name="renderer" content="webkit">
