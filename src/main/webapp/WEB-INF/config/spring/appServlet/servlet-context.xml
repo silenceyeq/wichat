@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+
+	<!-- spring-mvc -->
+	<context:component-scan base-package="com"
+		use-default-filters="true">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven />
+
+	<context:component-scan base-package="com.wichat.controller.*" />
+
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+		<!-- <beans:property name="order" value="1" /> -->
+	</beans:bean>
+
+	<!-- database connector -->
+	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<beans:property name="url"
+			value="jdbc:mysql://localhost:3306/wichat?allowMultiQueries=true"></beans:property>
+		<beans:property name="username" value="root"></beans:property>
+		<beans:property name="password" value="root"></beans:property>
+
+		<!--maxActive: 最大连接数量 -->
+		<beans:property name="maxActive" value="100" />
+		<!--minIdle: 最小空闲连接 -->
+		<beans:property name="minIdle" value="5" />
+		<!--maxIdle: 最大空闲连接 -->
+		<beans:property name="maxIdle" value="20" />
+		<!--initialSize: 初始化连接 -->
+		<beans:property name="initialSize" value="10" />
+		<!-- 连接被泄露时是否打印 -->
+		<beans:property name="logAbandoned" value="true" />
+		<!--removeAbandoned: 是否自动回收超时连接 -->
+		<beans:property name="removeAbandoned" value="true" />
+		<!--removeAbandonedTimeout: 超时时间(以秒数为单位) -->
+		<beans:property name="removeAbandonedTimeout" value="1200" />
+		<!--maxWait: 超时等待时间以毫秒为单位 1000等于60秒 -->
+		<beans:property name="maxWait" value="1000" />
+		<!-- 在空闲连接回收器线程运行期间休眠的时间值,以毫秒为单位. -->
+		<beans:property name="timeBetweenEvictionRunsMillis"
+			value="10000" />
+		<!-- 在每次空闲连接回收器线程(如果有)运行时检查的连接数量 -->
+		<beans:property name="numTestsPerEvictionRun" value="10" />
+		<!-- 1000 * 60 * 30 连接在池中保持空闲而不被空闲连接回收器线程 -->
+		<beans:property name="minEvictableIdleTimeMillis"
+			value="10000" />
+		<beans:property name="validationQuery" value="SELECT NOW() FROM DUAL" />
+		<beans:property name="testOnBorrow" value="true" />
+	</beans:bean>
+
+	<!-- myBatis相关配置  -->
+	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="configLocation" value="/WEB-INF/config/mybatis/SqlMapConfig.xml" />
+		<!-- mapper和resultmap配置路径 -->
+		<beans:property name="mapperLocations" value="classpath*:com/wichat/mybatis/*.xml"/>
+	</beans:bean>
+
+	<beans:bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<beans:property name="basePackage" value="com.wichat.mybatis" />
+		<beans:property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</beans:bean>
+
+
+	<!-- spring-websocket -->
+	<beans:bean id="websocket"
+		class="com.wichat.websocket.handler.WebsocketEndPoint">
+
+	</beans:bean>
+
+	<websocket:handlers>
+		<websocket:mapping path="/websocket" handler="websocket" />
+		<websocket:handshake-interceptors>
+			<beans:bean class="com.wichat.websocket.HandshakeInterceptor">
+			</beans:bean>
+		</websocket:handshake-interceptors>
+	</websocket:handlers>
+
+</beans:beans>
