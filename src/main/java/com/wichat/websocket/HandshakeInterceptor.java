@@ -12,14 +12,12 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor{
 	@Override
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler webSocketHandler,
 			Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
 		return super.beforeHandshake(request, response, webSocketHandler, map);
 	}
 	
 	@Override
 	public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
 			Exception ex) {
-		// TODO Auto-generated method stub
 		super.afterHandshake(request, response, wsHandler, ex);
 	}
 }

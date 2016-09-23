@@ -6880,7 +6880,7 @@ a.am-close:hover {
 .am-input-group-sm > .am-form-field,
 .am-input-group-sm > .am-input-group-label,
 .am-input-group-sm > .am-input-group-btn > .am-btn {
-  height: 33px;
+  height: 32px;
   font-size: 1.4rem !important;
 }
 .am-input-group-sm > .am-input-group-label {
