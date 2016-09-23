@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -8,7 +9,7 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<base href="<%=basePath%>resources	/">
+<%-- <base href="<%=basePath%>resources/"> --%>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
@@ -22,12 +23,12 @@
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 
 <link rel="alternate icon" href="assets/i/favicon.ico">
-<link href="amazeui/dist/css/amazeui.min.css" rel="stylesheet">
+<link href="<c:url value="/resources/amazeui/dist/css/amazeui.min.css" />" rel="stylesheet">
 <!-- <link rel="stylesheet" href="assets/css/amazeui.min.css"> -->
 <!-- <link rel="stylesheet" href="assets/css/app.css"> -->
 
 <!-- umeditor css -->
-<link href="umeditor/themes/default/css/umeditor.css" rel="stylesheet">
+<link href="<c:url value="/resources/umeditor/themes/default/css/umeditor.css" />" rel="stylesheet">
 
 <style>
 .title {
@@ -93,16 +94,16 @@
 	<!-- message input end -->
 
 	<!--[if (gte IE 9)|!(IE)]><!-->
-	<script src="js/jquery-3.0.0.min.js"></script>
+	<script src="<c:url value="/resources/js/jquery-3.0.0.min.js" />"></script>
 	<!--<![endif]-->
 	<!--[if lte IE 8 ]>
 	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
 	<![endif]-->
 
 	<!-- umeditor js -->
-	<script charset="utf-8" src="umeditor/umeditor.config.js"></script>
-	<script charset="utf-8" src="umeditor/umeditor.min.js"></script>
-	<script src="umeditor/lang/zh-cn/zh-cn.js"></script>
+	<script charset="utf-8" src="<c:url value="/resources/umeditor/umeditor.config.js" />"></script>
+	<script charset="utf-8" src="<c:url value="/resources/umeditor/umeditor.min.js" />"></script>
+	<script src="<c:url value="/resources/umeditor/lang/zh-cn/zh-cn.js" />"></script>
 
 	<script>
 		var um = UM.getEditor('myEditor');
@@ -127,7 +128,7 @@
 				var messageItem = '<li class="am-comment '
 						+ (message.isSelf ? 'am-comment-flip' : 'am-comment')
 						+ '">'
-						+ '<a href="javascript:void(0)" ><img src="images/'
+						+ '<a href="javascript:void(0)" ><img src="/WiChat/resources/images/'
 						+ (message.isSelf ? 'self.png' : 'others.jpg')
 						+ '" alt="" class="am-comment-avatar" width="48" height="48"/></a>'
 						+ '<div class="am-comment-main"><header class="am-comment-sd"><div class="am-comment-meta">'

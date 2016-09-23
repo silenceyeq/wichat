@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven>
+		<!-- <message-converters register-defaults="false">
+			<beans:bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+				<beans:property name="objectMapper" ref="customObjectMapper" />
+			</beans:bean>
+		</message-converters> -->
+	</mvc:annotation-driven>
+	
+	
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	
+	<!-- spring-mvc -->
+	<context:component-scan base-package="com"
+		use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="1" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.wichat" />
+	
+	
+	
+	
+	
+    
+    <!-- <mvc:interceptor>  
+    	<mvc:mapping path="/**"/>  
+    	<mvc:exclude-mapping path="/resources/**"/>
+    	<mvc:exclude-mapping path="/weixin/**"/>
+    	<mvc:exclude-mapping path="/admin*/**"/>
+        定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的  
+        <beans:bean class="com.u1city.shop.web.config.UnauthorizeLoginServlet">
+			<beans:property name="excludeUrls">
+				<beans:list>
+					<beans:value>/login/loginByAccount</beans:value>
+				</beans:list>
+			</beans:property>
+        </beans:bean>
+    </mvc:interceptor> -->
+    
+    <!-- 配置Token拦截器，防止用户重复提交数据 -->
+    <!--  <mvc:interceptor>
+         <mvc:mapping path = "/**" />
+         <beans:bean class = "com.u1city.shop.web.config.TokenInterceptor" />
+     </mvc:interceptor>
+    <mvc:interceptor>  
+        <mvc:mapping path="/**/**"/>  
+        定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的  
+        <beans:bean class="com.u1city.shop.web.config.UrlFilterServlet"/>  
+    </mvc:interceptor>  
+</mvc:interceptors>   -->
+
+	
+	
+	<!-- ehcache缓存配置 -->
+	<!-- <beans:bean id="defaultCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<beans:property name="configLocation"  value="classpath:ehcache.xml">
+		</beans:property>
+	</beans:bean>
+	
+	<beans:bean id="accessTokenCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<beans:property name="cacheManager" ref="defaultCacheManager" />
+		<beans:property name="cacheName">
+			<beans:value>accessTokenCache</beans:value>
+		</beans:property>
+	</beans:bean> -->
+	
+	
+	<!-- myBatis相关配置  add by yjz -->
+	<!-- <beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="configLocation" value="classpath:SqlMapConfig.xml" />
+		mapper和resultmap配置路径
+		<beans:property name="mapperLocations" value="classpath*:com/u1city/shop/data/mybatis/*.xml"/>
+	</beans:bean>
+
+	<beans:bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<beans:property name="basePackage" value="com.u1city.shop.data.mybatis" />
+		<beans:property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</beans:bean> -->
+	
+	
+</beans:beans>
