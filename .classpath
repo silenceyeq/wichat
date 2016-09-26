@@ -29,5 +29,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="src/main/webapp/resources/umeditor/jsp/ueditor-mini.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/ant-1.8.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/log4j-1.2.16.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

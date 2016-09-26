@@ -43,13 +43,13 @@ public class GenEntity {
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 
 	// 文件路径
-	private static final String path1 = "F:/workspace_test/wichat/src/main/java/com/wichat/mybatis/po/";
-	private static final String path2 = "F:/workspace_test/wichat/src/main/java/com/wichat/mybatis/mapper/";
+	private static final String path1 = "F:/workspace_test/wichat/src/main/java/com/wichat/entity/";
+	private static final String path2 = "F:/workspace_test/wichat/src/main/java/com/wichat/dao/";
 	private static final String path3 = "F:/workspace_test/wichat/src/main/java/com/wichat/service/";
 
 	// 文件包名
-	private static final String pack1 = "com.wichat.mybatis.po";
-	private static final String pack2 = "com.wichat.mybatis.mapper";
+	private static final String pack1 = "com.wichat.entity";
+	private static final String pack2 = "com.wichat.mybatis.dao";
 	private static final String pack3 = "com.wichat.service";
 
 	/*
@@ -153,12 +153,14 @@ public class GenEntity {
 		sb.append("/**\r\n");
 		sb.append(" * " + tableComment + " 实体类\r\n");
 		sb.append(" * \r\n");
-		sb.append(" * @author " + time + " zrr\r\n");
+		sb.append(" * @author " + time + "\r\n");
 		sb.append(" */\r\n");
 		// 实体部分
-		sb.append("@Entity\r\n");
-		sb.append("@Table(name = \"" + tableName + "\")\r\n");
-		sb.append("public class " + tableEntity + " extends DomainObject {\r\n");
+//		sb.append("@Entity\r\n");
+//		sb.append("@Table(name = \"" + tableName + "\")\r\n");
+		sb.append("public class " + tableEntity + ""
+//				+ " extends DomainObject"
+				+ " {\r\n");
 		sb.append("\r\n");
 		processAllAttrs(sb);// 属性
 		sb.append("\r\n");
@@ -184,12 +186,12 @@ public class GenEntity {
 			sb.append("import java.sql.*;\r\n");
 			sb.append("\r\n");
 		}
-		sb.append("import javax.persistence.Column;\r\n");
-		sb.append("import javax.persistence.Entity;\r\n");
-		sb.append("import javax.persistence.GeneratedValue;\r\n");
-		sb.append("import javax.persistence.Id;\r\n");
-		sb.append("import javax.persistence.Table;\r\n");
-		sb.append("import javax.persistence.Transient;\r\n");
+//		sb.append("import javax.persistence.Column;\r\n");
+//		sb.append("import javax.persistence.Entity;\r\n");
+//		sb.append("import javax.persistence.GeneratedValue;\r\n");
+//		sb.append("import javax.persistence.Id;\r\n");
+//		sb.append("import javax.persistence.Table;\r\n");
+//		sb.append("import javax.persistence.Transient;\r\n");
 		sb.append("\r\n");
 	}
 
@@ -213,21 +215,24 @@ public class GenEntity {
 	 * @param sb
 	 */
 	private void processAllMethod(StringBuffer sb) {
-		sb.append("\t@Transient\r\n");
-		sb.append("\t@Override\r\n");
-		sb.append("\tpublic Object getId() {\r\n");
-		sb.append("\t\treturn this." + attNames[priIndex] + ";\r\n");
-		sb.append("\t}\r\n");
+//		sb.append("\t@Transient\r\n");
+//		sb.append("\t@Override\r\n");
+//		sb.append("\tpublic Object getId() {\r\n");
+//		sb.append("\t\treturn this." + attNames[priIndex] + ";\r\n");
+//		sb.append("\t}\r\n");
 		sb.append("\r\n");
 		for (int i = 0; i < colnames.length; i++) {
+//			sb.append("\t/**\r\n");
+//			sb.append("\t * Get " + colComments[i] + "\r\n");
+//			sb.append("\t */\r\n");
+//			if (i == priIndex) {
+//				sb.append("\t@Id\r\n");
+//				sb.append("\t@GeneratedValue\r\n");
+//			}
+//			sb.append("\t@Column(name = \"" + colnames[i] + "\")\r\n");
 			sb.append("\t/**\r\n");
 			sb.append("\t * Get " + colComments[i] + "\r\n");
 			sb.append("\t */\r\n");
-			if (i == priIndex) {
-				sb.append("\t@Id\r\n");
-				sb.append("\t@GeneratedValue\r\n");
-			}
-			sb.append("\t@Column(name = \"" + colnames[i] + "\")\r\n");
 			sb.append("\tpublic " + sqlType2JavaType(colTypes[i]) + " get"
 					+ initcap(attNames[i]) + "() {\r\n");
 			sb.append("\t\treturn " + attNames[i] + ";\r\n");
@@ -346,13 +351,13 @@ public class GenEntity {
 			pwDao.flush();
 			pwDao.close();
 
-			String contentDaoImpl = parseDaoImpl();
-			FileWriter fwDaoImpl = new FileWriter(path2 + "" // hibernate/impl/
-					+ tableEntity + "DaoImpl.java");
-			PrintWriter pwDaoImpl = new PrintWriter(fwDaoImpl);
-			pwDaoImpl.println(contentDaoImpl);
-			pwDaoImpl.flush();
-			pwDaoImpl.close();
+//			String contentDaoImpl = parseDaoImpl();
+//			FileWriter fwDaoImpl = new FileWriter(path2 + "" // hibernate/impl/
+//					+ tableEntity + "DaoImpl.java");
+//			PrintWriter pwDaoImpl = new PrintWriter(fwDaoImpl);
+//			pwDaoImpl.println(contentDaoImpl);
+//			pwDaoImpl.flush();
+//			pwDaoImpl.close();
 			System.out.println("end");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -375,11 +380,12 @@ public class GenEntity {
 		sb.append("/**\r\n");
 		sb.append(" * " + tableComment + " Dao\r\n");
 		sb.append(" * \r\n");
-		sb.append(" * @author " + time + " zrr\r\n");
+		sb.append(" * @author " + time + "\r\n");
 		sb.append(" */\r\n");
 		// 实体部分
-		sb.append("public interface " + tableEntity + "Dao extends DaoSupport<"
-				+ tableEntity + "> {\r\n");
+		sb.append("public interface " + tableEntity + "Dao "
+//				+ "extends DaoSupport<" + tableEntity + ">"
+				+ " {\r\n");
 		sb.append("\r\n");
 		sb.append("}");
 		return sb.toString();
@@ -393,7 +399,7 @@ public class GenEntity {
 	private String parseDaoImpl() {
 		StringBuffer sb = new StringBuffer();
 		// 头部信息
-		sb.append("package " + pack2 + ".hibernate.impl;\r\n");
+		sb.append("package " + pack2 + ".impl;\r\n");
 		sb.append("\r\n");
 		sb.append("import org.hibernate.SessionFactory;\r\n");
 		sb.append("\r\n");
@@ -404,12 +410,13 @@ public class GenEntity {
 		sb.append("/**\r\n");
 		sb.append(" * " + tableComment + " Dao实现类\r\n");
 		sb.append(" * \r\n");
-		sb.append(" * @author " + time + " zrr\r\n");
+		sb.append(" * @author " + time + "\r\n");
 		sb.append(" */\r\n");
 		// 实体部分
 		sb.append("public class " + tableEntity
-				+ "DaoImpl extends HibernateDaoSupportImpl<" + tableEntity
-				+ ">\r\n");
+				+ "DaoImpl "
+//				+ "extends HibernateDaoSupportImpl<" + tableEntity + ">"
+				+ "\r\n");
 		sb.append("\t\timplements " + tableEntity + "Dao {\r\n");
 		sb.append("\r\n");
 		sb.append("\tpublic " + tableEntity
@@ -466,11 +473,13 @@ public class GenEntity {
 		sb.append("/**\r\n");
 		sb.append(" * " + tableComment + " Service\r\n");
 		sb.append(" * \r\n");
-		sb.append(" * @author " + time + " zrr\r\n");
+		sb.append(" * @author " + time + "\r\n");
 		sb.append(" */\r\n");
 		// 实体部分
 		sb.append("public interface " + tableEntity
-				+ "Service extends ServiceSupport<" + tableEntity + "> {\r\n");
+				+ "Service"
+//				+ " extends ServiceSupport<" + tableEntity + "> "
+				+ "{\r\n");
 		sb.append("\r\n");
 		sb.append("}");
 		return sb.toString();
@@ -494,12 +503,13 @@ public class GenEntity {
 		sb.append("/**\r\n");
 		sb.append(" * " + tableComment + " Service实现类\r\n");
 		sb.append(" * \r\n");
-		sb.append(" * @author " + time + " zrr\r\n");
+		sb.append(" * @author " + time + "\r\n");
 		sb.append(" */\r\n");
 		// 实体部分
 		sb.append("public class " + tableEntity
-				+ "ServiceImpl extends ServiceSupportImpl<" + tableEntity
-				+ "> implements\r\n");
+				+ "ServiceImpl"
+//				+ " extends ServiceSupportImpl<" + tableEntity + "> "
+				+ " implements\r\n");
 		sb.append("\t\t" + tableEntity + "Service {\r\n");
 		sb.append("\r\n");
 		sb.append("\tprivate " + tableEntity + "Dao dao;\r\n");
@@ -528,8 +538,8 @@ public class GenEntity {
 		 String table = "wichat_user";
 		 GenEntity ge = new GenEntity(table);
 		 ge.genEntity();
-		 ge.genDao();
-		 ge.genService();
+//		 ge.genDao();
+//		 ge.genService();
 //			Properties ps = System.getProperties();
 //			Set<String> pname = ps.stringPropertyNames();
 //			for (String name : pname) {
