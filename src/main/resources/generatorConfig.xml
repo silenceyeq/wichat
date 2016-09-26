@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<!-- 放在项目包中运行 -->
+	<classPathEntry
+		location="F:/workspace_test/maven/apache-maven-3.3.9/repository/mysql/mysql-connector-java/6.0.4/mysql-connector-java-6.0.4.jar" />
+	<context id="context1">
+		<jdbcConnection
+			connectionURL="jdbc:mysql://127.0.0.1:3306/wichat?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=UTF-8"
+			driverClass="com.mysql.jdbc.Driver" password="root" userId="root" />
+		<!-- pojo -->
+		<javaModelGenerator targetPackage="com.wichat.mybatis.po"
+			targetProject="wichat\src\main\java" />
+		<!-- sql -->
+		<sqlMapGenerator targetPackage="com.wichat.mybatis.mapper"
+			targetProject="wichat\src\main\java" />
+		<!-- dao -->
+		<javaClientGenerator targetPackage="com.wichat.dao"
+			targetProject="wichat\src\main\java" type="XMLMAPPER" />
+		<table schema="wichat" tableName="wichat_user" enableInsert="true"
+			enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true"
+			enableDeleteByPrimaryKey="true" enableSelectByExample="false"
+			enableDeleteByExample="false" enableCountByExample="false"
+			
+			enableUpdateByExample="false">
+			<!-- <columnOverride column="???" property="???" /> -->
+		</table>
+	</context>
+</generatorConfiguration>

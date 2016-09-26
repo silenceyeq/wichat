@@ -1,6 +1,6 @@
-package com.wichat.service;
+package com.wichat.service.impl;
 
-import com.wichat.mybatis.po.WichatUser;
+import com.wichat.service.WichatUserService;
 
 /**
  * 用户表 Service实现类
