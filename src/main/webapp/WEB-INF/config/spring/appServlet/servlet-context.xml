@@ -78,7 +78,7 @@
 	<!-- myBatis相关配置  -->
 	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
 		<beans:property name="dataSource" ref="dataSource" />
-		<beans:property name="configLocation" value="/WEB-INF/config/mybatis/SqlMapConfig.xml" />
+		<beans:property name="configLocation" value="/WEB-INF/config/mybatis/mybatis-config.xml" />
 		<!-- mapper和resultmap配置路径 -->
 		<beans:property name="mapperLocations" value="classpath*:com/wichat/mybatis/*.xml"/>
 	</beans:bean>
