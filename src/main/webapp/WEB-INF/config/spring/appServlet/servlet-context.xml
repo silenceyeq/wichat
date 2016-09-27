@@ -92,7 +92,6 @@
 	<!-- spring-websocket -->
 	<beans:bean id="websocket"
 		class="com.wichat.websocket.handler.WebsocketEndPoint">
-
 	</beans:bean>
 
 	<websocket:handlers>

@@ -16,27 +16,42 @@ body {
 	width: 80%;
 	margin: 0 auto;
 }
+.img_panel{
+    border: 1px solid #ccc;
+    height: 450px;
+    width: 80%;
+    position: fixed;
+    bottom: 32%;
+}
+.login_op{
+    position: fixed;
+    bottom: 18%;
+}
 </style>
 </head>
 <body>
 	<div class="login-panel">
-		<div class="col-md-12" style="margin-top: 380px;">
+		<div class="col-md-12 img_panel">
+			<div class=""></div>
+		</div>
+		<div class="col-md-12 login_op">
 			<form action="<c:url value="/admin/userLogin"/>" method="post" class="am-form">
 				<input type="hidden" name="isAutoLogin" value="1"/>
 				<div class="login-botton am-g am-g-collapse">
-					<div class="am-u-sm-3 am-u-md-4">
+					<div class="am-u-sm-2 am-u-md-2 am-u-md-offset-1">
 						<input class="am-input-sm" name="account" value="${account }" type="text" placeholder="email"/>
 					</div>
-					<div class="am-u-sm-3 am-u-md-4">
+					<div class="am-u-sm-2 am-u-md-2">
 						<input class="am-input-sm" name="password" value="${password }" type="password" placeholder="password"/>
 					</div>
-					<div class="am-u-sm-3 am-u-md-4 am-u-end">
-						<div class="am-input-group am-input-group-sm">
-							<input class="am-input-sm" name="code" type="text" placeholder="verification code"/>
-							 <span class="am-input-group-btn">
-						        <button class="am-btn am-btn-default" type="submit">Sign In</button>
-						     </span>
-					     </div>
+					<div class="am-u-sm-3 am-u-md-3 am-input-group am-input-group-sm">
+						<input class="am-input-sm" name="code" type="text" placeholder="verification code"/>
+						<span class="am-input-group-label" style="padding:0px">
+							<img src="<c:url value="/admin/varifyCode"/>">
+						</span>
+					</div>
+					<div class="am-u-sm-3 am-u-md-2 am-u-end">
+				        <button class="am-btn am-btn-secondary am-radius am-btn-sm" type="submit">Sign In</button>
 					</div>
 				</div>
 			</form>

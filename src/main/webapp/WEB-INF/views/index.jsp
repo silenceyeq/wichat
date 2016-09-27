@@ -89,7 +89,7 @@
 					<i class="am-icon-send"></i> Send
 				</button>
 				<button id="logout" type="button" class="am-btn am-btn-primary">
-					<i class="am-icon-out"></i> Logout
+					<i class="am-icon-sign-out"></i> Logout
 				</button>
 			</div>
 		</div>
