@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.wichat.controller.base.BaseController;
-import com.wichat.pojo.WichatUser;
 
 @Controller
 @RequestMapping(value="/admin")
