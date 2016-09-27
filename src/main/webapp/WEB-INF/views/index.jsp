@@ -88,6 +88,9 @@
 				<button id="send" type="button" class="am-btn am-btn-primary">
 					<i class="am-icon-send"></i> Send
 				</button>
+				<button id="logout" type="button" class="am-btn am-btn-primary">
+					<i class="am-icon-out"></i> Logout
+				</button>
 			</div>
 		</div>
 	</div>
@@ -120,6 +123,10 @@
 			// 点击Send按钮时的操作
 			$('#send').on('click', function(){
 				sendMessage();
+			});
+			
+			$('#logout').on('click',function(){
+				location.href='<%= basePath%>'+'admin/logout';
 			});
 
 			// 把消息添加到聊天内容中

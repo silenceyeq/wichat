@@ -5,13 +5,18 @@
         <id column="u_id" jdbcType="INTEGER" property="id" />
         <result column="u_account" jdbcType="VARCHAR" property="account" />
         <result column="u_password" jdbcType="VARCHAR" property="password" />
+        <result column="u_nickname" jdbcType="VARCHAR" property="nickname" />
+        <result column="u_avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+        <result column="u_create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="u_effective" jdbcType="INTEGER" property="effective" />
     </resultMap>
     <sql id="Base_Column_List">
-        u_id, u_account, u_password
+        u_id, u_account, u_password, u_nickname, u_avatar_url, u_create_time, u_effective
     </sql>
-    <select id="queryByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
+    
+     <select id="queryByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
     	select
-    		u_id,u_account
+   		<include refid="Base_Column_List" />
     	from user
     	<trim prefix="WHERE" prefixOverrides="AND|OR">
     		<if test="account != null">
@@ -22,6 +27,7 @@
     		</if>
     	</trim>
     </select>
+    
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select 
         <include refid="Base_Column_List" />
@@ -33,10 +39,12 @@
         where u_id = #{id,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.wichat.entity.User">
-        insert into user (u_id, u_account, u_password
-            )
-        values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
-            )
+        insert into user (u_id, u_account, u_password, 
+            u_nickname, u_avatar_url, u_create_time, 
+            u_effective)
+        values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+            #{nickname,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+            #{effective,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="com.wichat.entity.User">
         insert into user
@@ -50,6 +58,18 @@
             <if test="password != null">
                 u_password,
             </if>
+            <if test="nickname != null">
+                u_nickname,
+            </if>
+            <if test="avatarUrl != null">
+                u_avatar_url,
+            </if>
+            <if test="createTime != null">
+                u_create_time,
+            </if>
+            <if test="effective != null">
+                u_effective,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -60,6 +80,18 @@
             </if>
             <if test="password != null">
                 #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="avatarUrl != null">
+                #{avatarUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="effective != null">
+                #{effective,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -72,13 +104,29 @@
             <if test="password != null">
                 u_password = #{password,jdbcType=VARCHAR},
             </if>
+            <if test="nickname != null">
+                u_nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="avatarUrl != null">
+                u_avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                u_create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="effective != null">
+                u_effective = #{effective,jdbcType=INTEGER},
+            </if>
         </set>
         where u_id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.wichat.entity.User">
         update user
         set u_account = #{account,jdbcType=VARCHAR},
-            u_password = #{password,jdbcType=VARCHAR}
+            u_password = #{password,jdbcType=VARCHAR},
+            u_nickname = #{nickname,jdbcType=VARCHAR},
+            u_avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+            u_create_time = #{createTime,jdbcType=TIMESTAMP},
+            u_effective = #{effective,jdbcType=INTEGER}
         where u_id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>

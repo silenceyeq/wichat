@@ -22,12 +22,13 @@ body {
 	<div class="login-panel">
 		<div class="col-md-12" style="margin-top: 380px;">
 			<form action="<c:url value="/admin/userLogin"/>" method="post" class="am-form">
+				<input type="hidden" name="isAutoLogin" value="1"/>
 				<div class="login-botton am-g am-g-collapse">
 					<div class="am-u-sm-3 am-u-md-4">
-						<input class="am-input-sm" name="account" type="text" placeholder="email"/>
+						<input class="am-input-sm" name="account" value="${account }" type="text" placeholder="email"/>
 					</div>
 					<div class="am-u-sm-3 am-u-md-4">
-						<input class="am-input-sm" name="password" type="password" placeholder="password"/>
+						<input class="am-input-sm" name="password" value="${password }" type="password" placeholder="password"/>
 					</div>
 					<div class="am-u-sm-3 am-u-md-4 am-u-end">
 						<div class="am-input-group am-input-group-sm">

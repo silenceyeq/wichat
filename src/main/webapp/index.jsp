@@ -86,7 +86,7 @@
 			</div>
 			<div class="am-u-sm-6">
 				<button id="send" type="button" class="am-btn am-btn-primary">
-					<i class="am-icon-send"></i> Send
+					<i class="am-icon-send"></i> Send121
 				</button>
 			</div>
 		</div>

@@ -517,6 +517,7 @@ public class GenEntity {
 		sb.append(" */\r\n");
 		// 实体部分
 		sb.append("@Service");
+		sb.append("\r\n");
 		sb.append("public class " + tableEntity
 				+ "ServiceImpl"
 //				+ " extends ServiceSupportImpl<" + tableEntity + "> "
@@ -547,7 +548,7 @@ public class GenEntity {
 	 */
 	public static void main(String[] args) throws JsonGenerationException,
 			JsonMappingException, IOException {
-		 String table = "user";
+		 String table = "user_tokens";
 		 GenEntity ge = new GenEntity(table);
 //		 ge.genEntity();
 //		 ge.genDao();
