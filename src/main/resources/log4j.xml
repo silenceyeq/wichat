@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+<!-- 输至控制台-->
+<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+<layout class="org.apache.log4j.PatternLayout">
+  <param name="ConversionPattern" value="[%p]: %d{yyyy-MM-dd HH:mm:ss} %C.%M(%L)%n%m%n" />
+</layout>
+<filter class="org.apache.log4j.varia.LevelRangeFilter">
+<param name="LevelMax" value="ERROR" />
+<param name="LevelMin" value="DEBUG" />
+</filter>
+</appender>
+
+<!-- debug级别日志输出至debug.log文件-->
+<appender name="DEBUG" class="org.apache.log4j.RollingFileAppender">
+<param name="File" value="logs/debug.log"/>
+<param name="Append" value="true"/>
+<!-- 文件最大容量设置-->
+<param name="MaxFileSize" value="500KB"/>
+<!-- 循环文件个数设置-->
+<param name="MaxBackupIndex" value="3"/>
+<layout class="org.apache.log4j.PatternLayout">
+  <param name="ConversionPattern" value="%n[%d{yyyy-MM-dd HH:mm:ss}] %C.%M(%L)%n[%p]: %m%n" />
+</layout>
+<filter class="org.apache.log4j.varia.LevelRangeFilter">
+<param name="LevelMax" value="DEBUG" />
+<param name="LevelMin" value="DEBUG" />
+</filter>
+</appender>
+
+<!-- info级别日志输出至info.log文件-->
+<appender name="INFO" class="org.apache.log4j.RollingFileAppender">
+<param name="File" value="logs/info.log"/>
+<param name="Append" value="true"/>
+<param name="MaxFileSize" value="500KB"/>
+<param name="MaxBackupIndex" value="3"/>
+<layout class="org.apache.log4j.PatternLayout">
+  <param name="ConversionPattern" value="%n[%d{yyyy-MM-dd HH:mm:ss}] %C.%M(%L)%n[%p]: %m%n" />
+</layout>
+<filter class="org.apache.log4j.varia.LevelRangeFilter">
+<param name="LevelMax" value="INFO" />
+<param name="LevelMin" value="INFO" />
+</filter>
+</appender>
+
+<!-- warn级别日志输出至warn.log文件-->
+<appender name="WARN" class="org.apache.log4j.RollingFileAppender">
+<param name="File" value="logs/warn.log"/>
+<param name="Append" value="true"/>
+<param name="MaxFileSize" value="500KB"/>
+<param name="MaxBackupIndex" value="3"/>
+<layout class="org.apache.log4j.PatternLayout">
+  <param name="ConversionPattern" value="%n[%d{yyyy-MM-dd HH:mm:ss}] %C.%M(%L)%n[%p]: %m%n" />
+</layout>
+<filter class="org.apache.log4j.varia.LevelRangeFilter">
+<param name="LevelMax" value="WARN" />
+<param name="LevelMin" value="WARN" />
+</filter>
+</appender>
+<!-- error级别日志输出至error.log文件-->
+<appender name="ERROR" class="org.apache.log4j.RollingFileAppender">
+<param name="File" value="logs/error.log"/>
+<param name="Append" value="true"/>
+<param name="MaxFileSize" value="1024KB"/>
+<param name="MaxBackupIndex" value="3"/>
+<layout class="org.apache.log4j.PatternLayout">
+  <param name="ConversionPattern" value="%n[%d{yyyy-MM-dd HH:mm:ss}] %C.%M(%L)%n[%p]: %m%n" />
+</layout>
+<filter class="org.apache.log4j.varia.LevelRangeFilter">
+<param name="LevelMax" value="ERROR" />
+<param name="LevelMin" value="ERROR" />
+</filter>
+</appender>
+
+        <appender name="IBatis" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+        <param name="ConversionPattern"
+        value="%-4r [%t] %-5p %c %x - %m%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+        <param name="LevelMin" value="DEBUG" />
+        <param name="LevelMax" value="DEBUG" />
+        </filter>
+        </appender>
+        <logger name="com.wichat.mybatis.mapper" additivity="true">
+        <level value="DEBUG" />
+        </logger>
+        <logger name="java.sql.Connection" additivity="true">
+        <level value="DEBUG" />
+        </logger>
+        <logger name="java.sql.Statement" additivity="true">
+        <level value="DEBUG" />
+        </logger>
+        <logger name="java.sql.PreparedStatement" additivity="true">
+        <level value="DEBUG" />
+        <appender-ref ref="IBatis" />
+        </logger>
+        <logger name="java.sql.ResultSet" additivity="true">
+        <level value="DEBUG" />
+        </logger>
+        <appender-ref ref="IBatis" />
+        
+
+<!-- 设置日志输出级别 -->
+<root>
+<priority value="INFO" />
+<appender-ref ref="STDOUT"/>
+<appender-ref ref="DEBUG"/>
+<appender-ref ref="INFO"/>
+<appender-ref ref="WARN"/>
+<appender-ref ref="ERROR"/>
+</root>
+</log4j:configuration>

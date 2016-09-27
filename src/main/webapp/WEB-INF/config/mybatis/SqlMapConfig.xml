@@ -3,7 +3,12 @@
 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
+	<properties>
+		<property name="dialect" value="mysql" />
+	</properties>
+	<settings>  
+        <setting name="logImpl" value="LOG4J" />    
+    </settings>  
 	<!-- 将数据库连接数据抽取到属性文件中方便测试 -->
 	<!-- <properties resource="/WEB-INF/classes/jdbc.properties"></properties> -->
 	<!-- 别名的定义 -->

@@ -21,7 +21,7 @@ body {
 <body>
 	<div class="login-panel">
 		<div class="col-md-12" style="margin-top: 380px;">
-			<form action="<c:url value="/admin/login"/>" class="am-form">
+			<form action="<c:url value="/admin/userLogin"/>" method="post" class="am-form">
 				<div class="login-botton am-g am-g-collapse">
 					<div class="am-u-sm-3 am-u-md-4">
 						<input class="am-input-sm" name="account" type="text" placeholder="email"/>

@@ -49,7 +49,7 @@ public class GenEntity {
 
 	// 文件包名
 	private static final String pack1 = "com.wichat.entity";
-	private static final String pack2 = "com.wichat.mybatis.dao";
+	private static final String pack2 = "com.wichat.mybatis.mapper";
 	private static final String pack3 = "com.wichat.service";
 
 	/*
@@ -264,6 +264,14 @@ public class GenEntity {
 			ch[0] = (char) (ch[0] - 32);
 		}
 
+		return new String(ch);
+	}
+	
+	private String toLowerInitial(String str){
+		char[] ch = str.toCharArray();
+		if(ch[0] >= 'A' && ch[0] <='Z'){
+			ch[0] = (char)(ch[0] + 32);
+		}
 		return new String(ch);
 	}
 
@@ -493,10 +501,12 @@ public class GenEntity {
 	private String parseServiceImpl() {
 		StringBuffer sb = new StringBuffer();
 		// 头部信息
-		sb.append("package " + pack3 + ".impl;\r\n");
+		sb.append("package " + pack3 + ";\r\n");
+		sb.append("\r\n");
+		sb.append("import org.springframework.stereotype.Service;");
 		sb.append("\r\n");
 		sb.append("import " + pack1 + "." + tableEntity + ";\r\n");
-		sb.append("import " + pack2 + "." + tableEntity + "Dao;\r\n");
+		sb.append("import " + pack2 + "." + tableEntity + "Mapper;\r\n");
 		sb.append("import " + pack3 + "." + tableEntity + "Service;\r\n");
 		sb.append("\r\n");
 		// 注释部分
@@ -506,19 +516,21 @@ public class GenEntity {
 		sb.append(" * @author " + time + "\r\n");
 		sb.append(" */\r\n");
 		// 实体部分
+		sb.append("@Service");
 		sb.append("public class " + tableEntity
 				+ "ServiceImpl"
 //				+ " extends ServiceSupportImpl<" + tableEntity + "> "
 				+ " implements\r\n");
 		sb.append("\t\t" + tableEntity + "Service {\r\n");
 		sb.append("\r\n");
-		sb.append("\tprivate " + tableEntity + "Dao dao;\r\n");
+		sb.append("\tprivate " + tableEntity + "Mapper "+toLowerInitial(tableEntity)+"Mapper;\r\n");
+		System.out.println(tableEntity);
 		sb.append("\r\n");
-		sb.append("\tpublic " + tableEntity + "ServiceImpl(" + tableEntity
-				+ "Dao dao) {\r\n");
-		sb.append("\t\tsuper(dao);\r\n");
-		sb.append("\t\tthis.dao = dao;\r\n");
-		sb.append("\t}\r\n");
+//		sb.append("\tpublic " + tableEntity + "ServiceImpl(" + tableEntity
+//				+ "Dao dao) {\r\n");
+//		sb.append("\t\tsuper(dao);\r\n");
+//		sb.append("\t\tthis.dao = dao;\r\n");
+//		sb.append("\t}\r\n");
 		sb.append("\r\n");
 		sb.append("}");
 		return sb.toString();
@@ -535,11 +547,11 @@ public class GenEntity {
 	 */
 	public static void main(String[] args) throws JsonGenerationException,
 			JsonMappingException, IOException {
-		 String table = "wichat_user";
+		 String table = "user";
 		 GenEntity ge = new GenEntity(table);
-		 ge.genEntity();
+//		 ge.genEntity();
 //		 ge.genDao();
-//		 ge.genService();
+		 ge.genService();
 //			Properties ps = System.getProperties();
 //			Set<String> pname = ps.stringPropertyNames();
 //			for (String name : pname) {
