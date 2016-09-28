@@ -24,6 +24,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wichat.controller.base.BaseController;
 import com.wichat.entity.User;
@@ -45,7 +46,7 @@ public class LoginController extends BaseController {
 	private UserTokenService userTokenService;
 
 	@RequestMapping(value = "/login")
-	public String Login(HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String Login(HttpServletRequest request, HttpServletResponse response, Model model,RedirectAttributes attr) {
 
 		User user = autoLogin(request, response);
 		if (!StringUtils.isEmpty(user)) {
@@ -69,11 +70,12 @@ public class LoginController extends BaseController {
 
 	@RequestMapping(value = "/userLogin")
 	public String userLogin(@RequestParam String account, @RequestParam String password, String isAutoLogin,
-			Model model, HttpServletRequest request, HttpServletResponse response) {
+			Model model,RedirectAttributes attr, HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 
 		User user = login(account, password);
 		if (ObjectUtils.isEmpty(user)) {
+			attr.addFlashAttribute("error_msg","password error !");
 			return "redirect:/admin/login";
 		} else {
 
@@ -110,18 +112,12 @@ public class LoginController extends BaseController {
 			
 			model.addAttribute("user",user);
 			log.info(user.toString());
-			
-			byte[] baseDecode = Base64.getDecoder().decode("2wichat");
-			String encode = Base64.getEncoder().encodeToString(baseDecode);
-			log.info(baseDecode.toString());
-			log.info(encode.toString());
 			return "/index";
 		}
 	}
 	
 	@RequestMapping(value="/varifyCode")
 	public void verifyCode(HttpServletRequest request, HttpServletResponse response){
-		
 		BufferedImage image = VerifyCodeUtil.generateImageCode(0, 4, "", 149, 30, 4, true, Color.gray, null, null);
 		try {
 			ImageIO.write(image, "png", response.getOutputStream());
@@ -133,8 +129,18 @@ public class LoginController extends BaseController {
 	private User login(String account, String password) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("account", account);
-		params.put("password", password);
-		return userService.queryByCondition(params);
+		User user = userService.queryByCondition(params);
+		// 如果用户不存在，则直接注册
+		if(StringUtils.isEmpty(user)){
+			User newUser = new User();
+			newUser.setAccount(account);
+			newUser.setPassword(password);
+			return user;
+		}else{
+			params.put("password", password);
+			user = userService.queryByCondition(params);
+			return user;
+		}
 	}
 
 	private User autoLogin(HttpServletRequest request, HttpServletResponse response) {
@@ -158,13 +164,15 @@ public class LoginController extends BaseController {
 			}
 
 			Map<String, Object> params = new HashMap<>();
-			params.put("user_agent", agentValue);
-			UserToken oriToken = userTokenService.queryByCondition(params);
-			if (oriToken.getToken().equals(tokenValue)) {
-				user = userService.getById(oriToken.getUserId());
-				request.getSession().setAttribute("userInfo", user);
-				return user;
+			if(!StringUtils.isEmpty(agentValue)){
+				params.put("user_agent", agentValue);
+				UserToken oriToken = userTokenService.queryByCondition(params);
+				if (oriToken.getToken().equals(tokenValue)) {
+					user = userService.getById(oriToken.getUserId());
+					request.getSession().setAttribute("userInfo", user);
+				}
 			}
+			return user;
 		} catch (NullPointerException e) {
 			log.error("cookies is null.");
 		}

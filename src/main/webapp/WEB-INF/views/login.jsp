@@ -60,9 +60,15 @@ body {
 </body>
 <script src="<c:url value="/resources/js/jquery-3.0.0.min.js" />"></script>
 <script src="<c:url value="/resources/amazeui/dist/js/amazeui.min.js" />"></script>
+	<jsp:include page="./plugins.jsp"></jsp:include>
 <script type="text/javascript">
 $(function(){
-	
+	if('${error_msg}'){
+		layer.msg('${error_msg}',{
+			icon: 7,
+		  	time: 2000 //2秒关闭（如果不配置，默认是3秒）
+		});
+	}
 });
 </script>
 </html>

@@ -108,7 +108,6 @@
 	<script charset="utf-8" src="<c:url value="/resources/umeditor/umeditor.config.js" />"></script>
 	<script charset="utf-8" src="<c:url value="/resources/umeditor/umeditor.min.js" />"></script>
 	<script src="<c:url value="/resources/umeditor/lang/zh-cn/zh-cn.js" />"></script>
-
 	<script>
 		var um = UM.getEditor('myEditor');
 		var socket = new WebSocket('ws://${pageContext.request.getServerName()}:${pageContext.request.getServerPort()}${pageContext.request.contextPath}/websocket');
