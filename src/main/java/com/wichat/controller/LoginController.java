@@ -3,6 +3,7 @@ package com.wichat.controller;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Base64Utils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -105,7 +107,15 @@ public class LoginController extends BaseController {
 					userTokenService.updateByPrimaryKeySelective(userToken);
 				}
 			}
-			return "redirect:/admin/index";
+			
+			model.addAttribute("user",user);
+			log.info(user.toString());
+			
+			byte[] baseDecode = Base64.getDecoder().decode("2wichat");
+			String encode = Base64.getEncoder().encodeToString(baseDecode);
+			log.info(baseDecode.toString());
+			log.info(encode.toString());
+			return "/index";
 		}
 	}
 	

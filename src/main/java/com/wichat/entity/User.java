@@ -137,4 +137,12 @@ public class User {
     public void setEffective(Integer effective) {
         this.effective = effective;
     }
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", account=" + account + ", password=" + password + ", nickname=" + nickname
+				+ ", avatarUrl=" + avatarUrl + ", createTime=" + createTime + ", effective=" + effective + "]";
+	}
+    
+    
 }

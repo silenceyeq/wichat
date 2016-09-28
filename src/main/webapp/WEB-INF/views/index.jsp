@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -81,7 +82,7 @@
 					class="am-input-group am-input-group-primary">
 					<span class="am-input-group-label"><i class="am-icon-user"></i></span>
 					<input id="nickname" type="text" class="am-form-field"
-						placeholder="Please enter nickname" />
+						placeholder="Please enter nickname" <c:if test="${not empty user.nickname && fn:trim(user.nickname) ne ''}">value="${user.nickname }" disabled</c:if> />
 				</div>
 			</div>
 			<div class="am-u-sm-6">
