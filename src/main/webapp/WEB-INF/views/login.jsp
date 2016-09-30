@@ -36,7 +36,7 @@ body {
 		</div>
 		<div class="col-md-12 login_op">
 			<form action="<c:url value="/admin/userLogin"/>" method="post" class="am-form">
-				<input type="hidden" name="isAutoLogin" value="1"/>
+				<input type="hidden" name="isRememberPassowrd" value="1"/>
 				<div class="login-botton am-g am-g-collapse">
 					<div class="am-u-sm-2 am-u-md-2 am-u-md-offset-1">
 						<input class="am-input-sm" name="account" value="${account }" type="text" placeholder="email"/>

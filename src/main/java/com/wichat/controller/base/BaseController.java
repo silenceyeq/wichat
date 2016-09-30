@@ -1,5 +1,8 @@
 package com.wichat.controller.base;
 
-public class BaseController {
+import javax.servlet.http.HttpSession;
+
+public abstract class BaseController {
+	
 
 }

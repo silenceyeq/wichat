@@ -22,6 +22,9 @@ public class AESHelper {
 
 	/**
 	 * AES加密算法
+	 * 默认编码 UTF-8
+	 * @param plainText
+	 * @return
 	 */
 	public static String AESEncrypt(String plainText) {
 		String encryptedValue = null;
@@ -29,6 +32,29 @@ public class AESHelper {
 			Key key = new SecretKeySpec(keyWord.getBytes(), "AES");
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			byte[] byteContent = plainText.getBytes("utf-8");
+			try {
+				cipher.init(Cipher.ENCRYPT_MODE, key,
+						new IvParameterSpec(_key1));
+			} catch (InvalidAlgorithmParameterException e) {
+				e.printStackTrace();
+			}
+			byte[] encValue = cipher.doFinal(byteContent);
+			encryptedValue = new String(new Base64().encode(encValue));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return encryptedValue;
+	}	
+	
+	/**
+	 * AES加密算法
+	 */
+	public static String AESEncrypt(String plainText,String charsetName) {
+		String encryptedValue = null;
+		try {
+			Key key = new SecretKeySpec(keyWord.getBytes(), "AES");
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+			byte[] byteContent = plainText.getBytes(charsetName);
 			try {
 				cipher.init(Cipher.ENCRYPT_MODE, key,
 						new IvParameterSpec(_key1));
