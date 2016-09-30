@@ -65,7 +65,23 @@ body {
 <script src="<c:url value="/resources/amazeui/dist/js/amazeui.min.js" />"></script>
 	<jsp:include page="./plugins.jsp"></jsp:include>
 <script type="text/javascript">
+
+var context;
+window.addEventListener('load', init, false);
+function init() {
+  try {
+    // Fix up for prefixing
+    window.AudioContext = window.AudioContext||window.webkitAudioContext;
+    context = new AudioContext();
+    alert(1)
+  }
+  catch(e) {
+    alert('Web Audio API is not supported in this browser');
+  }
+}
+
 $(function(){
+	
 	if('${error_msg}'){
 		layer.msg('${error_msg}',{
 			icon: 7,
