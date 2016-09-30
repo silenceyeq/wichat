@@ -84,16 +84,6 @@ public class LoginController extends BaseController {
 			return "redirect:/admin/index";
 		}
 	}
-	
-	@RequestMapping(value="/varifyCode")
-	public void verifyCode(HttpServletRequest request, HttpServletResponse response){
-		BufferedImage image = VerifyCodeUtil.generateImageCode(0, 4, "", 149, 30, 4, true, Color.gray, null, null);
-		try {
-			ImageIO.write(image, "png", response.getOutputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
 	private User login(String account, String password,String isRememberPassowrd,HttpServletRequest request,HttpServletResponse response) {
 		Map<String, Object> params = new HashMap<>();

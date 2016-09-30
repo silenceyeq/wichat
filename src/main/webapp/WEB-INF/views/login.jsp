@@ -47,11 +47,14 @@ body {
 					<div class="am-u-sm-3 am-u-md-3 am-input-group am-input-group-sm">
 						<input class="am-input-sm" name="code" type="text" placeholder="verification code"/>
 						<span class="am-input-group-label" style="padding:0px">
-							<img src="<c:url value="/admin/varifyCode"/>">
+							<img src="<c:url value="/tools/varifyCode"/>">
 						</span>
 					</div>
-					<div class="am-u-sm-3 am-u-md-2 am-u-end">
+					<div class="am-u-sm-3 am-u-md-1 am-u-end">
 				        <button class="am-btn am-btn-secondary am-radius am-btn-sm" type="submit">Sign In</button>
+					</div>
+					<div class="am-u-sm-3 am-u-md-1 am-u-end">
+				        <img src="<c:url value="/tools/code"/>" />
 					</div>
 				</div>
 			</form>
